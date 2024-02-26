@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 151871431}
   - component: {fileID: 151871430}
   - component: {fileID: 151871429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Small Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 284584148}
   - component: {fileID: 284584147}
   - component: {fileID: 284584146}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Beeg Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,7 +629,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590131206}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055473916, y: 0.0000000021474862, z: -1.193132e-10, w: 0.9984602}
+  m_LocalRotation: {x: 0.055473916, y: -0.0000000021474862, z: 1.193132e-10, w: 0.9984602}
   m_LocalPosition: {x: 0, y: 2.4, z: -9.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 601115796}
   - component: {fileID: 601115795}
   - component: {fileID: 601115794}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1213,7 +1213,7 @@ GameObject:
   - component: {fileID: 1110783484}
   - component: {fileID: 1110783483}
   - component: {fileID: 1110783482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1377,7 +1377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1172284359}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055473916, y: 0.0000000021474857, z: -1.1931316e-10, w: 0.9984602}
+  m_LocalRotation: {x: 0.055473916, y: -0.0000000021474857, z: 1.1931316e-10, w: 0.9984602}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1623,6 +1623,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 13b72129-c8e5-444e-94bf-f309269d860e
     m_ActionName: Base/Dash[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: baa91310-de57-4d97-ba8f-a09e7418fa0c
+    m_ActionName: Base/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Base
@@ -2164,7 +2168,7 @@ GameObject:
   - component: {fileID: 1990678156}
   - component: {fileID: 1990678155}
   - component: {fileID: 1990678154}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2352,7 +2356,7 @@ GameObject:
   - component: {fileID: 2033241542}
   - component: {fileID: 2033241541}
   - component: {fileID: 2033241540}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Long Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

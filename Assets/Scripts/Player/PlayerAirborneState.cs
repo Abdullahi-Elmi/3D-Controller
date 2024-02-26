@@ -24,9 +24,12 @@ public class PlayerAirborneState : PlayerBaseState
         if(Context.IsGrounded){
             SwitchState(StateFactory.Grounded());
         }
-        if(Context.InCoyoteTime && Context.JumpToConsume){
+        else if(Context.InCoyoteTime && Context.JumpToConsume){
             Debug.Log("Coyote time jump");
             SwitchState(StateFactory.Jump());
+        }
+        else if(Context.IsTouchingWall && Context.transform.position.y > Context.MinimumWallRunHeight && Context.MovementInput.y > 0f && Context.SprintHeldInput){
+            SwitchState(StateFactory.WallRun());
         }
         Context.JumpToConsume = false;
     }

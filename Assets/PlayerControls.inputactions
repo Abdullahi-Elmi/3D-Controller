@@ -250,6 +250,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f278090b-b91b-4a24-ac8d-dc8666e0f887",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7b347222-4dc4-45e4-ab66-8f20cf0e47b8",
                     "path": "<Keyboard>/q",
                     "interactions": "",

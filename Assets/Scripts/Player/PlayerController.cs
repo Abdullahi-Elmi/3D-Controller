@@ -70,30 +70,32 @@ public class PlayerController : MonoBehaviour
     [Header("Wall Running")]
     [SerializeField] private float _wallCheckDistance = 0.1f; // How far from the outside of the player's collider to check for walls.
     [SerializeField] private float _minWallRunHeight = 1f; // The minimum height the player needs to be from the ground to wall run
+    [SerializeField] private float _wallRunGravity = -1.0f; // The gravity to apply when wall running
     [SerializeField] private float _wallJumpUpForce = 36f; // The upwards force to apply when jumping off a wall
     [SerializeField] private float _wallJumpOutForce = 10f; // The outwards (sideways/away from the wall) force to apply when jumping off a wall
     private Vector3 _wallNormal; // Add this field to store the wall's normal vector
     private bool _hitWall = false; // Flag to keep track of if the player hit a wall
     private bool _wallOnRightSide;
-    private bool _wallOnLeftSide;
     private bool IsWallRunning => !_isGrounded && _hitWall && transform.position.y > _minWallRunHeight && (_movementInput != Vector2.zero);
     #endregion
 
     #region Getters & Setters
     public Vector3 FrameVelocity { get => _frameVelocity; set => _frameVelocity = value; }
+    public Vector2 MovementInput => _movementInput;
     public bool MovementPressedInput => _movementInput != Vector2.zero;
     public bool JumpHeldInput => _jumpHeldInput;
     public bool SprintHeldInput => _sprintHeldInput;
     public float WalkSpeed => _walkSpeed;
     public float SprintSpeed => _sprintSpeed;
-    public float JumpForce => _jumpForce;
     public float HorizontalAcceleration => _acceleration;
+    public float GroundDeceleration => _groundDeceleration;
+    public float AirDeceleration => _airDeceleration;
+    public float JumpForce => _jumpForce;    
     public float AirMultiplier => _airMultiplier;
     public float GroundingForce => _groundingForce;
     public float FallAcceleration => _fallAcceleration;
     public float MaxFallSpeed => _maxFallSpeed;
-    public float GroundDeceleration => _groundDeceleration;
-    public float AirDeceleration => _airDeceleration;
+    public float WallRunGravity => _wallRunGravity;
     public float EndedJumpEarlyGravityModifier => _endedJumpEarlyGravityModifier;
     public bool IsJumpBuffered => _canBufferJump && Time.time < _timeJumpWasPressed + _jumpBufferTime;
     public bool InCoyoteTime => _canCoyoteTime && Time.time < _timeLeftGround + _coyoteTime;
@@ -104,6 +106,10 @@ public class PlayerController : MonoBehaviour
     public bool CanCoyoteTime { get => _canCoyoteTime; set => _canCoyoteTime = value; }
     public bool EndedJumpEarly { get => _endedJumpEarly; set => _endedJumpEarly = value; }
     public float TimeLeftGround { get => _timeLeftGround; set => _timeLeftGround = value; }
+    public bool IsTouchingWall => _hitWall;
+    public bool WallOnRightside => _wallOnRightSide;
+    public float MinimumWallRunHeight => _minWallRunHeight;
+    public Vector3 WallNormal => _wallNormal;
     #endregion
 
     private void Awake()
@@ -218,7 +224,6 @@ public class PlayerController : MonoBehaviour
     private void CheckWallCollisions(){
         _hitWall = false;
         _wallOnRightSide = false;
-        _wallOnLeftSide = false;
         Vector3[] directions = new Vector3[]{
             transform.right, 
             transform.right + transform.forward,
@@ -242,15 +247,8 @@ public class PlayerController : MonoBehaviour
                     
                     // Determine the side of the wall
                     Vector3 crossProduct = Vector3.Cross(_wallNormal, transform.forward);
-                    if (crossProduct.y > 0)
-                    {
-                        _wallOnRightSide = true;
-                    }
-                    else
-                    {
-                        _wallOnLeftSide = true;
-                    }
-
+                    // If the cross-product of the wall's normal, and direction we're facing is positive, then the wall's on our right, otherwise it's on our left
+                    _wallOnRightSide = crossProduct.y > 0; 
                     break; // Exit the loop as soon as a wall is hit
                 }
             }
