@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// To-Do:
-// - Add a wall running state
-// - Add a wall jump state
-// - Add Dashing
+// TODO:
+// - Figure out new drag, acceleration and speed values for snappier and smoother movement
 // - Add Swinging 
 
 public class PlayerController : MonoBehaviour
@@ -18,9 +16,9 @@ public class PlayerController : MonoBehaviour
 
     #region Parameters
     [Header("Component References")]
+    [SerializeField] private Camera _mainCamera;
     private Rigidbody _rb;
     private CapsuleCollider _capsuleCollider;
-    [SerializeField] private Camera _mainCamera;
     private PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _jumpAction;
@@ -60,8 +58,7 @@ public class PlayerController : MonoBehaviour
     private float _timeLeftGround = float.MinValue; // Keeps track of the time the player left the ground to compare with the current time to see if we're within the coyote time window.
 
     [Header("Dashing")]
-    [SerializeField] private float _dashForce = 10f; // The force to apply when dashing
-    [SerializeField] private float _dashUpwardForce = 10f; // The force to apply on the y axis when dashing
+    [SerializeField] private float _dashSpeed = 100f; // The force to apply when dashing
     [SerializeField] private float _dashDuration = 0.1f; // The duration of the dash
     [SerializeField] private float _dashCooldown = 1f; // The time to wait before the player can dash again
     private bool _dashToConsume; // Becomes true when dash button is pressed, and remains so until the player actually dashes in the Dash() method. Prevents input from getting lost between physics and update frames.
@@ -75,11 +72,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _wallJumpOutForce = 10f; // The outwards (sideways/away from the wall) force to apply when jumping off a wall
     private Vector3 _wallNormal; // Add this field to store the wall's normal vector
     private bool _hitWall = false; // Flag to keep track of if the player hit a wall
-    private bool _wallOnRightSide;
-    private bool IsWallRunning => !_isGrounded && _hitWall && transform.position.y > _minWallRunHeight && (_movementInput != Vector2.zero);
+    private bool _wallOnRightSide; // Flag to keep track of which of our sides the wall we're colliding with is on
     #endregion
 
     #region Getters & Setters
+    public Transform CameraTransform => _mainCamera.transform;
     public Vector3 FrameVelocity { get => _frameVelocity; set => _frameVelocity = value; }
     public Vector2 MovementInput => _movementInput;
     public bool MovementPressedInput => _movementInput != Vector2.zero;
@@ -108,6 +105,11 @@ public class PlayerController : MonoBehaviour
     public bool CanCoyoteTime { get => _canCoyoteTime; set => _canCoyoteTime = value; }
     public bool EndedJumpEarly { get => _endedJumpEarly; set => _endedJumpEarly = value; }
     public float TimeLeftGround { get => _timeLeftGround; set => _timeLeftGround = value; }
+    public bool DashToConsume { get => _dashToConsume; set => _dashToConsume = value; }
+    public float DashSpeed => _dashSpeed;
+    public float DashDuration => _dashDuration;
+    public float DashCooldown => _dashCooldown;
+    public float DashCooldownTimer { get => _dashCooldownTimer; set => _dashCooldownTimer = value; }    
     public bool IsTouchingWall => _hitWall;
     public bool WallOnRightside => _wallOnRightSide;
     public float MinimumWallRunHeight => _minWallRunHeight;
@@ -148,10 +150,18 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HandleTimers();
         CheckCollisions();
         RotatePlayer();
         _currentState.UpdateStates();
         _rb.velocity = _frameVelocity;
+    }
+    private void HandleTimers()
+    {
+        if (_dashCooldownTimer >= 0)
+        {
+            _dashCooldownTimer -= Time.fixedDeltaTime;
+        }
     }
     private void RotatePlayer()
     {
@@ -190,11 +200,7 @@ public class PlayerController : MonoBehaviour
             _jumpToConsume = true;
             _timeJumpWasPressed = Time.time;
         }
-
-        if (_dashAction.WasPressedThisFrame() && _dashCooldownTimer <= 0)
-        {
-            _dashToConsume = true;
-        }
+        if (_dashAction.WasPressedThisFrame() && _dashCooldownTimer <= 0) _dashToConsume = true;
     }
     #endregion
     #region Collision Checks

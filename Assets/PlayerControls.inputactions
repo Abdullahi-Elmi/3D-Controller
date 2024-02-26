@@ -261,8 +261,8 @@
                 },
                 {
                     "name": "",
-                    "id": "7b347222-4dc4-45e4-ab66-8f20cf0e47b8",
-                    "path": "<Keyboard>/q",
+                    "id": "613f91d7-d74b-4af2-bf94-2530b11ec098",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -272,8 +272,8 @@
                 },
                 {
                     "name": "",
-                    "id": "613f91d7-d74b-4af2-bf94-2530b11ec098",
-                    "path": "<Gamepad>/leftShoulder",
+                    "id": "3ee8f04d-e644-488e-a8ba-f81d1cf86818",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

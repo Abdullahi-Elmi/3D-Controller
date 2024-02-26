@@ -40,7 +40,10 @@ public class PlayerGroundedState : PlayerBaseState
         Context.JumpToConsume = false;
     }
     public override void InitializeSubState(){
-        if(!Context.MovementPressedInput){
+        if(Context.DashToConsume){
+            SetSubState(StateFactory.Dash());
+        }
+        else if(!Context.MovementPressedInput){
             SetSubState(StateFactory.Idle());
         }
         else{

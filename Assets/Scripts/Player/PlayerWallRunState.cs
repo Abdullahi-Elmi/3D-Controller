@@ -12,7 +12,6 @@ public class PlayerWallRunState : PlayerBaseState
     }
 
     public override void EnterState(){
-        Debug.Log("Entered Wall Run");
         Context.CanBufferJump = true;
         Context.CanCoyoteTime = true;
         Context.EndedJumpEarly = false;

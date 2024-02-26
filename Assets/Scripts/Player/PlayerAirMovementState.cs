@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlayerAirMovementState : PlayerBaseState
 {
     private bool _wasSprintingOnGround = false;
-    public PlayerAirMovementState(PlayerController currentContext, PlayerStateFactory stateFactory) : base(currentContext, stateFactory){
+    public PlayerAirMovementState(PlayerController currentContext, PlayerStateFactory stateFactory) : base(currentContext, stateFactory){}
+
+    public override void EnterState(){
         // check if the player was sprinting before they entered the air by checking their horizontal velocity (xz plane) and comparing it to the sprint speed
         Vector3 horizontalVelocity = new Vector3(Context.FrameVelocity.x, 0, Context.FrameVelocity.z);
         _wasSprintingOnGround = horizontalVelocity.magnitude > Context.WalkSpeed;
     }
-
-    public override void EnterState(){}
     public override void UpdateState(){
         AirMove();
         CheckTransitions();
@@ -34,10 +34,6 @@ public class PlayerAirMovementState : PlayerBaseState
             // if the player was not sprinting on the ground and is holding the sprint button we don't want to let them start sprinting in the air
             // so we set the sprinting on the ground flag to false
             _wasSprintingOnGround = false;
-        }
-
-        if(movementSpeed == Context.SprintSpeed){
-            Debug.Log("Sprinting in the air");
         }
 
         frameVelocity.x = Mathf.MoveTowards(frameVelocity.x, movementDirection.x * movementSpeed * airMultiplier, horizontalAcceleration * Time.fixedDeltaTime);

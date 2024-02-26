@@ -14,9 +14,7 @@ public class PlayerWallJumpState : PlayerBaseState
     public override void UpdateState(){
         CheckTransitions();
     }
-    public override void ExitState(){
-        // Set camera back to normal
-    }
+    public override void ExitState(){}
     public override void CheckTransitions(){
         if(Context.IsTouchingWall && Context.transform.position.y > Context.MinimumWallRunHeight && Context.MovementInput.y > 0f && Context.SprintHeldInput)
             SwitchState(StateFactory.WallRun());
