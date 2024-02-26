@@ -13,17 +13,24 @@ public class PlayerWallRunState : PlayerBaseState
 
     public override void EnterState(){
         Debug.Log("Entered Wall Run");
-        // Tilt the camera away from the wall we're running on
+        Context.CanBufferJump = true;
+        Context.CanCoyoteTime = true;
+        Context.EndedJumpEarly = false;
+        // TODO: Tilt the camera away from the wall we're running on, and increase the FOV
     }
     public override void UpdateState(){
         WallRun();
         CheckTransitions();
     }
     public override void ExitState(){
-        // Set camera back to normal
+        // TODO: Set camera back to normal
     }
     public override void CheckTransitions(){
-        if(!Context.IsTouchingWall || Context.transform.position.y < Context.MinimumWallRunHeight || Context.MovementInput.y <= 0f || !Context.SprintHeldInput){
+        // Can also include buffer and coyote transitions here, but I'm not sure if that's necessary right now
+        if(Context.JumpToConsume){
+            SwitchState(StateFactory.WallJump());
+        }
+        else if(!Context.IsTouchingWall || Context.transform.position.y < Context.MinimumWallRunHeight || Context.MovementInput.y <= 0f || !Context.SprintHeldInput){
             SwitchState(StateFactory.Airborne());
         }
     }

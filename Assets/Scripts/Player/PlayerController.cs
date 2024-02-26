@@ -90,7 +90,9 @@ public class PlayerController : MonoBehaviour
     public float HorizontalAcceleration => _acceleration;
     public float GroundDeceleration => _groundDeceleration;
     public float AirDeceleration => _airDeceleration;
-    public float JumpForce => _jumpForce;    
+    public float JumpForce => _jumpForce;
+    public float WallJumpUpForce => _wallJumpUpForce;
+    public float WallJumpOutForce => _wallJumpOutForce;
     public float AirMultiplier => _airMultiplier;
     public float GroundingForce => _groundingForce;
     public float FallAcceleration => _fallAcceleration;

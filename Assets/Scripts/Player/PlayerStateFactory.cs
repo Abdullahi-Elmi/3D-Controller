@@ -9,7 +9,8 @@ enum PlayerStates
     Airborne,
     AirMovement,
     Jump,
-    WallRun
+    WallRun,
+    WallJump
     // Add more states here
 }
 
@@ -29,6 +30,7 @@ public class PlayerStateFactory
         _states.Add(PlayerStates.AirMovement, new PlayerAirMovementState(_context, this));
         _states.Add(PlayerStates.Jump, new PlayerJumpState(_context, this));
         _states.Add(PlayerStates.WallRun, new PlayerWallRunState(_context, this));
+        _states.Add(PlayerStates.WallJump, new PlayerWallJumpState(_context, this));
     }
 
     public PlayerBaseState Grounded()
@@ -63,5 +65,9 @@ public class PlayerStateFactory
     public PlayerBaseState WallRun()
     {
         return _states[PlayerStates.WallRun];
+    }
+    public PlayerBaseState WallJump()
+    {
+        return _states[PlayerStates.WallJump];
     }
 }
