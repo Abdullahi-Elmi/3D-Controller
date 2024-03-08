@@ -38,12 +38,10 @@ public class PlayerGroundedState : PlayerBaseState
             SwitchState(StateFactory.Airborne());
         }
         Context.JumpToConsume = false;
+        Context.DashToConsume = false;
     }
     public override void InitializeSubState(){
-        if(Context.DashToConsume){
-            SetSubState(StateFactory.Dash());
-        }
-        else if(!Context.MovementPressedInput){
+        if(!Context.MovementPressedInput){
             SetSubState(StateFactory.Idle());
         }
         else{

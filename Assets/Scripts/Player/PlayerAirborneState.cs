@@ -34,7 +34,12 @@ public class PlayerAirborneState : PlayerBaseState
         Context.JumpToConsume = false;
     }
     public override void InitializeSubState(){
-        SetSubState(StateFactory.AirMovement());
+        if(Context.DashToConsume){
+            SetSubState(StateFactory.Dash());
+        }
+        else{
+            SetSubState(StateFactory.AirMovement());
+        }
     }
 
     void HandleGravity(){

@@ -17,7 +17,12 @@ public class PlayerAirMovementState : PlayerBaseState
         CheckTransitions();
     }
     public override void ExitState(){}
-    public override void CheckTransitions(){}
+    public override void CheckTransitions(){
+        if(Context.DashToConsume){
+            SwitchState(StateFactory.Dash());
+        }
+        Context.DashToConsume = false;
+    }
     public override void InitializeSubState(){}
     void AirMove(){
         Vector3 frameVelocity = Context.FrameVelocity;

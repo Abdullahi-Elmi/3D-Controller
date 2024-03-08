@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 // TODO:
+// - Change from freelook camera to virtual camera
+// - Add crosshair version of the camera with shoulder offset for swinging mode (might also just become the regular default mode)
 // - Figure out new drag, acceleration and speed values for snappier and smoother movement
 // - Add Swinging 
 
@@ -155,6 +157,7 @@ public class PlayerController : MonoBehaviour
         RotatePlayer();
         _currentState.UpdateStates();
         _rb.velocity = _frameVelocity;
+        Debug.Log("Velocity: " + _rb.velocity);
     }
     private void HandleTimers()
     {

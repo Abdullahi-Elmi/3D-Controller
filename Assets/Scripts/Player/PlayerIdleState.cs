@@ -13,10 +13,7 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void ExitState(){}
     public override void CheckTransitions(){
-        if(Context.DashToConsume){
-            SwitchState(StateFactory.Dash());
-        }
-        else if(Context.MovementPressedInput){
+        if(Context.MovementPressedInput){
             if(Context.SprintHeldInput){
                 SwitchState(StateFactory.Sprint());
             } 
